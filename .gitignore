@@ -21,7 +21,7 @@ build/
 .venv/
 venv/
 env/
-
+MedBrief/
 # macOS
 .DS_Store
 

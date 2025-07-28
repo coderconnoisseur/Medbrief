@@ -5,10 +5,21 @@ def split_sentences(text: str):
 from transformers import AutoTokenizer, AutoModel
 import torch
 import re
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
-# Load ClinicalBERT model and tokenizer
-tokenizer = AutoTokenizer.from_pretrained("emilyalsentzer/Bio_ClinicalBERT")
-model = AutoModel.from_pretrained("emilyalsentzer/Bio_ClinicalBERT")
+huggingface_token = os.environ.get("HUGGINGFACE_HUB_TOKEN")
+
+tokenizer = AutoTokenizer.from_pretrained(
+    "emilyalsentzer/Bio_ClinicalBERT",
+    token=huggingface_token
+)
+
+model = AutoModel.from_pretrained(
+    "emilyalsentzer/Bio_ClinicalBERT",
+    use_auth_token=huggingface_token
+)
 
 def get_sentence_embedding(sentence: str):
     inputs = tokenizer(sentence, return_tensors="pt", truncation=True, max_length=128)

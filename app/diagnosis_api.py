@@ -1,7 +1,8 @@
 import os
 import re
 from openai import OpenAI
-
+from dotenv import load_dotenv
+load_dotenv()
 def suggest_diagnosis(symptoms, conditions, medications):
     """
     Generates a structured diagnostic prompt for a language model using patient data.
@@ -42,9 +43,10 @@ Next Steps: [Relevant tests/treatments/referrals]
 ---
 """
     
+    openrouter_api_key = os.environ.get("OPENROUTER_API_KEY")
     client = OpenAI(
         base_url="https://openrouter.ai/api/v1",
-        api_key=os.environ.get("OPENROUTER_API_KEY", "")#MY API KEY
+        api_key=openrouter_api_key  # Explicitly pass the API key
     )
     try:
         completion = client.chat.completions.create(
@@ -84,4 +86,4 @@ parsed = parse_diagnosis_response(response)
 print(parsed["likely_diagnosis"])  
 print(parsed["reasoning"])         
 print(parsed["urgency"])           
-print(parsed["next_steps"])        
+print(parsed["next_steps"])

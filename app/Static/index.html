@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clinical Note Smart Summarizer - AI-Powered Medical Documentation</title>
+    <meta name="description" content="Transform clinical notes into actionable insights with our AI-powered medical summarization tool. Extract symptoms, medications, diagnoses, and treatment plans instantly." />
+    <meta name="author" content="Clinical Note Smart Summarizer" />
+    <meta name="keywords" content="clinical notes, medical AI, healthcare, summarization, medical documentation, EMR, EHR" />
+
+    <meta property="og:title" content="Clinical Note Smart Summarizer - AI-Powered Medical Documentation" />
+    <meta property="og:description" content="Transform clinical notes into actionable insights with our AI-powered medical summarization tool. Extract symptoms, medications, diagnoses, and treatment plans instantly." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@lovable_dev" />
+    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <style>
+      :root {
+        --background: 210 20% 98%;
+        --foreground: 213 31% 12%;
+        --card: 0 0% 100%;
+        --card-foreground: 213 31% 12%;
+        --primary: 207 90% 45%;
+        --primary-foreground: 0 0% 100%;
+        --primary-hover: 207 90% 40%;
+        --secondary: 210 40% 96%;
+        --secondary-foreground: 213 31% 12%;
+        --muted: 210 40% 96%;
+        --muted-foreground: 213 20% 45%;
+        --accent: 195 100% 95%;
+        --accent-foreground: 207 90% 45%;
+        --destructive: 0 84% 60%;
+        --destructive-foreground: 0 0% 100%;
+        --border: 210 30% 90%;
+        --input: 210 30% 94%;
+        --ring: 207 90% 45%;
+        --radius: 0.75rem;
+      }
+
+      body {
+        background: hsl(var(--background));
+        color: hsl(var(--foreground));
+      }
+
+      .bg-gradient-medical {
+        background: linear-gradient(135deg, hsl(207 90% 45%), hsl(195 100% 50%));
+      }
+
+      .bg-gradient-subtle {
+        background: linear-gradient(180deg, hsl(210 20% 98%), hsl(210 30% 96%));
+      }
+
+      .shadow-medical {
+        box-shadow: 0 4px 20px -4px hsl(207 90% 45% / 0.15);
+      }
+
+      .shadow-soft {
+        box-shadow: 0 2px 10px -2px hsl(213 31% 12% / 0.08);
+      }
+
+      .bg-card {
+        background: hsl(var(--card));
+      }
+
+      .text-foreground {
+        color: hsl(var(--foreground));
+      }
+
+      .text-muted-foreground {
+        color: hsl(var(--muted-foreground));
+      }
+
+      .text-primary-foreground {
+        color: hsl(var(--primary-foreground));
+      }
+
+      .border-border {
+        border-color: hsl(var(--border));
+      }
+
+      .bg-input {
+        background: hsl(var(--input));
+      }
+
+      .focus\:ring-primary:focus {
+        ring-color: hsl(var(--ring));
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="min-h-screen bg-gradient-subtle">
+      <!-- Header -->
+      <header class="bg-card shadow-soft border-b border-border">
+        <div class="container mx-auto px-6 py-8">
+          <div class="flex items-center justify-center gap-3">
+            <div class="p-3 bg-gradient-medical rounded-lg">
+              <i data-lucide="stethoscope" class="h-8 w-8 text-primary-foreground"></i>
+            </div>
+            <h1 class="text-4xl font-bold text-foreground">
+              Clinical Note Smart Summarizer
+            </h1>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Content -->
+      <main class="container mx-auto px-6 py-16">
+        <div class="max-w-4xl mx-auto text-center">
+          <div class="mb-12">
+            <h2 class="text-5xl font-bold text-foreground mb-6">
+              Transform Clinical Notes into Actionable Insights
+            </h2>
+            <p class="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+              Our AI-powered tool extracts and summarizes key insights from clinical documentation. 
+              Get instant analysis of symptoms, medications, diagnoses, and treatment plans to streamline your workflow.
+            </p>
+          </div>
+
+          <!-- Feature Cards -->
+          <div class="grid md:grid-cols-3 gap-8 mb-12">
+            <div class="bg-card p-6 rounded-xl shadow-soft border border-border">
+              <div class="w-12 h-12 bg-gradient-medical rounded-lg mx-auto mb-4 flex items-center justify-center">
+                <i data-lucide="brain" class="h-6 w-6 text-primary-foreground"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-foreground mb-2">AI-Powered Analysis</h3>
+              <p class="text-muted-foreground text-sm">
+                Advanced natural language processing to understand complex medical terminology and context.
+              </p>
+            </div>
+
+            <div class="bg-card p-6 rounded-xl shadow-soft border border-border">
+              <div class="w-12 h-12 bg-gradient-medical rounded-lg mx-auto mb-4 flex items-center justify-center">
+                <i data-lucide="zap" class="h-6 w-6 text-primary-foreground"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-foreground mb-2">Instant Processing</h3>
+              <p class="text-muted-foreground text-sm">
+                Get comprehensive summaries and extracted insights in seconds, not minutes.
+              </p>
+            </div>
+
+            <div class="bg-card p-6 rounded-xl shadow-soft border border-border">
+              <div class="w-12 h-12 bg-gradient-medical rounded-lg mx-auto mb-4 flex items-center justify-center">
+                <i data-lucide="shield-check" class="h-6 w-6 text-primary-foreground"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-foreground mb-2">Secure & Private</h3>
+              <p class="text-muted-foreground text-sm">
+                Your clinical data is processed securely and is not stored permanently on our servers.
+              </p>
+            </div>
+          </div>
+
+          <!-- CTA Button -->
+          <div>
+            <a href="{{url_for('upload_endpoint')}}" class="inline-flex items-center gap-3 bg-gradient-medical hover:opacity-90 text-primary-foreground px-8 py-4 rounded-xl text-lg font-semibold shadow-medical hover:shadow-lg transition-all duration-300">
+              <i data-lucide="upload" class="h-5 w-5"></i>
+              Start Summarizing
+            </a>
+            <p class="text-sm text-muted-foreground mt-4">
+              Upload your clinical note or paste text to begin analysis
+            </p>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      lucide.createIcons();
+    </script>
+  </body>
+</html>

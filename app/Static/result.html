@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Analysis Results - Clinical Note Smart Summarizer</title>
+    <meta name="description" content="View the AI-powered analysis results of your clinical note including extracted symptoms, medications, diagnoses, and treatment plans." />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <style>
+      :root {
+        --background: 210 20% 98%;
+        --foreground: 213 31% 12%;
+        --card: 0 0% 100%;
+        --card-foreground: 213 31% 12%;
+        --primary: 207 90% 45%;
+        --primary-foreground: 0 0% 100%;
+        --primary-hover: 207 90% 40%;
+        --secondary: 210 40% 96%;
+        --secondary-foreground: 213 31% 12%;
+        --muted: 210 40% 96%;
+        --muted-foreground: 213 20% 45%;
+        --accent: 195 100% 95%;
+        --accent-foreground: 207 90% 45%;
+        --destructive: 0 84% 60%;
+        --destructive-foreground: 0 0% 100%;
+        --border: 210 30% 90%;
+        --input: 210 30% 94%;
+        --ring: 207 90% 45%;
+        --radius: 0.75rem;
+      }
+
+      body {
+        background: hsl(var(--background));
+        color: hsl(var(--foreground));
+      }
+
+      .bg-gradient-medical {
+        background: linear-gradient(135deg, hsl(207 90% 45%), hsl(195 100% 50%));
+      }
+
+      .bg-gradient-subtle {
+        background: linear-gradient(180deg, hsl(210 20% 98%), hsl(210 30% 96%));
+      }
+
+      .shadow-medical {
+        box-shadow: 0 4px 20px -4px hsl(207 90% 45% / 0.15);
+      }
+
+      .shadow-soft {
+        box-shadow: 0 2px 10px -2px hsl(213 31% 12% / 0.08);
+      }
+
+      .bg-card {
+        background: hsl(var(--card));
+      }
+
+      .text-foreground {
+        color: hsl(var(--foreground));
+      }
+
+      .text-muted-foreground {
+        color: hsl(var(--muted-foreground));
+      }
+
+      .text-primary-foreground {
+        color: hsl(var(--primary-foreground));
+      }
+
+      .border-border {
+        border-color: hsl(var(--border));
+      }
+
+      .bg-input {
+        background: hsl(var(--input));
+      }
+
+      .text-primary {
+        color: hsl(var(--primary));
+      }
+
+      .bg-secondary {
+        background: hsl(var(--secondary));
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="min-h-screen bg-gradient-subtle">
+      <!-- Header -->
+      <header class="bg-card shadow-soft border-b border-border">
+        <div class="container mx-auto px-6 py-4">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="p-2 bg-gradient-medical rounded-lg">
+                <i data-lucide="stethoscope" class="h-6 w-6 text-primary-foreground"></i>
+              </div>
+              <h1 class="text-2xl font-bold text-foreground">
+                Clinical Note Smart Summarizer
+              </h1>
+            </div>
+            <div class="flex gap-2">
+              <a href="upload.html" class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-medical text-primary-foreground rounded-lg hover:opacity-90 transition-opacity">
+                <i data-lucide="plus" class="h-4 w-4"></i>
+                New Analysis
+              </a>
+              <a href="index.html" class="inline-flex items-center gap-2 px-4 py-2 border border-border rounded-lg text-foreground hover:bg-secondary transition-colors">
+                <i data-lucide="home" class="h-4 w-4"></i>
+                Home
+              </a>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Content -->
+      <main class="container mx-auto px-6 py-8">
+        <div class="max-w-6xl mx-auto">
+          <!-- Page Title -->
+          <div class="text-center mb-8">
+            <h2 class="text-3xl font-bold text-foreground mb-2">
+              Clinical Note Analysis Results
+            </h2>
+            <p class="text-muted-foreground">
+              AI-powered extraction and summarization of key clinical insights
+            </p>
+          </div>
+
+          <!-- Results Grid -->
+          <div class="grid lg:grid-cols-2 gap-8">
+            <!-- Original Clinical Note -->
+            <div class="lg:col-span-2">
+              <div class="bg-card rounded-xl shadow-soft border border-border">
+                <div class="p-6">
+                  <div class="flex items-center gap-3 mb-4">
+                    <div class="p-2 bg-gradient-medical rounded-lg">
+                      <i data-lucide="file-text" class="h-5 w-5 text-primary-foreground"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-foreground">Original Clinical Note</h3>
+                  </div>
+                  <div class="bg-secondary rounded-lg p-4 text-sm text-foreground leading-relaxed max-h-64 overflow-y-auto">
+                    <p class="font-medium mb-2">Patient: John Doe, Age: 45</p>
+                    <p class="font-medium mb-2">Chief Complaint: Chest pain and shortness of breath</p>
+                    <p class="mb-2"><strong>History of Present Illness:</strong> Patient presents with acute onset chest pain that began approximately 2 hours ago. Pain is described as sharp, radiating to left arm and jaw. Associated with shortness of breath, diaphoresis, and nausea. Patient has history of hypertension and hyperlipidemia.</p>
+                    <p class="mb-2"><strong>Physical Examination:</strong> Vitals: BP 165/95, HR 102, RR 22, O2 Sat 94% on room air. Patient appears anxious and diaphoretic. Heart sounds regular with no murmurs. Lungs clear bilaterally.</p>
+                    <p class="mb-2"><strong>Assessment:</strong> Rule out acute coronary syndrome. Differential includes unstable angina, STEMI, NSTEMI.</p>
+                    <p><strong>Plan:</strong> 12-lead EKG, cardiac enzymes, chest X-ray. Start aspirin 325mg, nitroglycerin SL PRN, continuous cardiac monitoring.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- AI Summary -->
+            <div class="lg:col-span-2">
+              <div class="bg-card rounded-xl shadow-medical border border-border">
+                <div class="p-6">
+                  <div class="flex items-center gap-3 mb-4">
+                    <div class="p-2 bg-gradient-medical rounded-lg">
+                      <i data-lucide="brain" class="h-5 w-5 text-primary-foreground"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-foreground">AI-Generated Summary</h3>
+                  </div>
+                  <div class="bg-accent rounded-lg p-4 text-sm text-foreground leading-relaxed">
+                    <p>45-year-old male presents with acute chest pain and shortness of breath suggestive of acute coronary syndrome. Patient has cardiovascular risk factors including hypertension and hyperlipidemia. Clinical presentation warrants immediate cardiac workup and monitoring. Initial treatment with aspirin and nitroglycerin initiated pending further diagnostic evaluation.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Extracted Symptoms -->
+            <div>
+              <div class="bg-card rounded-xl shadow-soft border border-border">
+                <div class="p-6">
+                  <div class="flex items-center gap-3 mb-4">
+                    <div class="p-2 bg-gradient-medical rounded-lg">
+                      <i data-lucide="activity" class="h-5 w-5 text-primary-foreground"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-foreground">Extracted Symptoms</h3>
+                  </div>
+                  <div class="space-y-2">
+                    <div class="flex items-center gap-2 p-2 bg-secondary rounded-lg">
+                      <i data-lucide="alert-circle" class="h-4 w-4 text-primary"></i>
+                      <span class="text-sm text-foreground">Acute chest pain</span>
+                    </div>
+                    <div class="flex items-center gap-2 p-2 bg-secondary rounded-lg">
+                      <i data-lucide="wind" class="h-4 w-4 text-primary"></i>
+                      <span class="text-sm text-foreground">Shortness of breath</span>
+                    </div>
+                    <div class="flex items-center gap-2 p-2 bg-secondary rounded-lg">
+                      <i data-lucide="droplets" class="h-4 w-4 text-primary"></i>
+                      <span class="text-sm text-foreground">Diaphoresis</span>
+                    </div>
+                    <div class="flex items-center gap-2 p-2 bg-secondary rounded-lg">
+                      <i data-lucide="frown" class="h-4 w-4 text-primary"></i>
+                      <span class="text-sm text-foreground">Nausea</span>
+                    </div>
+                    <div class="flex items-center gap-2 p-2 bg-secondary rounded-lg">
+                      <i data-lucide="zap" class="h-4 w-4 text-primary"></i>
+                      <span class="text-sm text-foreground">Pain radiating to left arm and jaw</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Medications -->
+            <div>
+              <div class="bg-card rounded-xl shadow-soft border border-border">
+                <div class="p-6">
+                  <div class="flex items-center gap-3 mb-4">
+                    <div class="p-2 bg-gradient-medical rounded-lg">
+                      <i data-lucide="pill" class="h-5 w-5 text-primary-foreground"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-foreground">Medications</h3>
+                  </div>
+                  <div class="space-y-2">
+                    <div class="flex items-center gap-2 p-2 bg-secondary rounded-lg">
+                      <i data-lucide="tablet" class="h-4 w-4 text-primary"></i>
+                      <span class="text-sm text-foreground">Aspirin 325mg</span>
+                    </div>
+                    <div class="flex items-center gap-2 p-2 bg-secondary rounded-lg">
+                      <i data-lucide="heart" class="h-4 w-4 text-primary"></i>
+                      <span class="text-sm text-foreground">Nitroglycerin SL PRN</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Diagnoses -->
+            <div>
+              <div class="bg-card rounded-xl shadow-soft border border-border">
+                <div class="p-6">
+                  <div class="flex items-center gap-3 mb-4">
+                    <div class="p-2 bg-gradient-medical rounded-lg">
+                      <i data-lucide="clipboard-list" class="h-5 w-5 text-primary-foreground"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-foreground">Diagnoses</h3>
+                  </div>
+                  <div class="space-y-2">
+                    <div class="flex items-center gap-2 p-2 bg-secondary rounded-lg">
+                      <i data-lucide="alert-triangle" class="h-4 w-4 text-primary"></i>
+                      <span class="text-sm text-foreground">Rule out acute coronary syndrome</span>
+                    </div>
+                    <div class="flex items-center gap-2 p-2 bg-secondary rounded-lg">
+                      <i data-lucide="heart" class="h-4 w-4 text-primary"></i>
+                      <span class="text-sm text-foreground">Unstable angina (differential)</span>
+                    </div>
+                    <div class="flex items-center gap-2 p-2 bg-secondary rounded-lg">
+                      <i data-lucide="activity" class="h-4 w-4 text-primary"></i>
+                      <span class="text-sm text-foreground">STEMI/NSTEMI (differential)</span>
+                    </div>
+                    <div class="flex items-center gap-2 p-2 bg-secondary rounded-lg">
+                      <i data-lucide="trending-up" class="h-4 w-4 text-primary"></i>
+                      <span class="text-sm text-foreground">Hypertension (history)</span>
+                    </div>
+                    <div class="flex items-center gap-2 p-2 bg-secondary rounded-lg">
+                      <i data-lucide="droplet" class="h-4 w-4 text-primary"></i>
+                      <span class="text-sm text-foreground">Hyperlipidemia (history)</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Treatment Plan -->
+            <div>
+              <div class="bg-card rounded-xl shadow-soft border border-border">
+                <div class="p-6">
+                  <div class="flex items-center gap-3 mb-4">
+                    <div class="p-2 bg-gradient-medical rounded-lg">
+                      <i data-lucide="clipboard-check" class="h-5 w-5 text-primary-foreground"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-foreground">Treatment Plan</h3>
+                  </div>
+                  <div class="space-y-2">
+                    <div class="flex items-center gap-2 p-2 bg-secondary rounded-lg">
+                      <i data-lucide="activity" class="h-4 w-4 text-primary"></i>
+                      <span class="text-sm text-foreground">12-lead EKG</span>
+                    </div>
+                    <div class="flex items-center gap-2 p-2 bg-secondary rounded-lg">
+                      <i data-lucide="test-tube" class="h-4 w-4 text-primary"></i>
+                      <span class="text-sm text-foreground">Cardiac enzymes</span>
+                    </div>
+                    <div class="flex items-center gap-2 p-2 bg-secondary rounded-lg">
+                      <i data-lucide="x-ray" class="h-4 w-4 text-primary"></i>
+                      <span class="text-sm text-foreground">Chest X-ray</span>
+                    </div>
+                    <div class="flex items-center gap-2 p-2 bg-secondary rounded-lg">
+                      <i data-lucide="monitor" class="h-4 w-4 text-primary"></i>
+                      <span class="text-sm text-foreground">Continuous cardiac monitoring</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="mt-8 text-center">
+            <a href="upload.html" class="inline-flex items-center gap-2 bg-gradient-medical text-primary-foreground px-6 py-3 rounded-lg hover:opacity-90 transition-opacity">
+              <i data-lucide="plus" class="h-4 w-4"></i>
+              Analyze Another Note
+            </a>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      lucide.createIcons();
+    </script>
+  </body>
+</html>

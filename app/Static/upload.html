@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Upload Clinical Note - Clinical Note Smart Summarizer</title>
+    <meta name="description" content="Upload your clinical note for AI-powered analysis and summarization. Paste text or upload a file to get started." />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <style>
+      :root {
+        --background: 210 20% 98%;
+        --foreground: 213 31% 12%;
+        --card: 0 0% 100%;
+        --card-foreground: 213 31% 12%;
+        --primary: 207 90% 45%;
+        --primary-foreground: 0 0% 100%;
+        --primary-hover: 207 90% 40%;
+        --secondary: 210 40% 96%;
+        --secondary-foreground: 213 31% 12%;
+        --muted: 210 40% 96%;
+        --muted-foreground: 213 20% 45%;
+        --accent: 195 100% 95%;
+        --accent-foreground: 207 90% 45%;
+        --destructive: 0 84% 60%;
+        --destructive-foreground: 0 0% 100%;
+        --border: 210 30% 90%;
+        --input: 210 30% 94%;
+        --ring: 207 90% 45%;
+        --radius: 0.75rem;
+      }
+
+      body {
+        background: hsl(var(--background));
+        color: hsl(var(--foreground));
+      }
+
+      .bg-gradient-medical {
+        background: linear-gradient(135deg, hsl(207 90% 45%), hsl(195 100% 50%));
+      }
+
+      .bg-gradient-subtle {
+        background: linear-gradient(180deg, hsl(210 20% 98%), hsl(210 30% 96%));
+      }
+
+      .shadow-medical {
+        box-shadow: 0 4px 20px -4px hsl(207 90% 45% / 0.15);
+      }
+
+      .shadow-soft {
+        box-shadow: 0 2px 10px -2px hsl(213 31% 12% / 0.08);
+      }
+
+      .bg-card {
+        background: hsl(var(--card));
+      }
+
+      .text-foreground {
+        color: hsl(var(--foreground));
+      }
+
+      .text-muted-foreground {
+        color: hsl(var(--muted-foreground));
+      }
+
+      .text-primary-foreground {
+        color: hsl(var(--primary-foreground));
+      }
+
+      .border-border {
+        border-color: hsl(var(--border));
+      }
+
+      .bg-input {
+        background: hsl(var(--input));
+      }
+
+      .focus\:ring-2:focus {
+        ring-width: 2px;
+      }
+
+      .focus\:ring-primary:focus {
+        ring-color: hsl(var(--ring));
+      }
+
+      .focus\:border-transparent:focus {
+        border-color: transparent;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="min-h-screen bg-gradient-subtle">
+      <!-- Header -->
+      <header class="bg-card shadow-soft border-b border-border">
+        <div class="container mx-auto px-6 py-4">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="p-2 bg-gradient-medical rounded-lg">
+                <i data-lucide="stethoscope" class="h-6 w-6 text-primary-foreground"></i>
+              </div>
+              <h1 class="text-2xl font-bold text-foreground">
+                Clinical Note Smart Summarizer
+              </h1>
+            </div>
+            <a href="index.html" class="inline-flex items-center gap-2 px-4 py-2 border border-border rounded-lg text-foreground hover:bg-secondary transition-colors">
+              <i data-lucide="arrow-left" class="h-4 w-4"></i>
+              Back to Home
+            </a>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Content -->
+      <main class="container mx-auto px-6 py-12">
+        <div class="max-w-3xl mx-auto">
+          <div class="text-center mb-8">
+            <h2 class="text-3xl font-bold text-foreground mb-4">
+              Upload Clinical Note
+            </h2>
+            <p class="text-muted-foreground">
+              Paste your clinical text or upload a .txt file to get started with AI-powered summarization.
+            </p>
+          </div>
+
+          <div class="bg-card shadow-medical border-0 rounded-xl">
+            <div class="text-center p-6 pb-6">
+              <div class="w-16 h-16 bg-gradient-medical rounded-full mx-auto flex items-center justify-center mb-4">
+                <i data-lucide="file-text" class="h-8 w-8 text-primary-foreground"></i>
+              </div>
+              <h3 class="text-xl font-semibold text-foreground mb-2">Submit Clinical Documentation</h3>
+              <p class="text-muted-foreground">
+                Choose to either paste text directly or upload a text file containing the clinical note.
+              </p>
+            </div>
+            
+            <div class="p-6">
+              <form method="POST" action="/summarize" enctype="multipart/form-data" class="space-y-8">
+                <!-- Text Input Section -->
+                <div class="space-y-4">
+                  <div class="space-y-2">
+                    <label for="clinical-text" class="text-base font-medium text-foreground block">
+                      Clinical Note Text
+                    </label>
+                    <p class="text-sm text-muted-foreground">
+                      Paste the raw clinical text here for analysis
+                    </p>
+                  </div>
+                  <textarea
+                    id="clinical-text"
+                    name="clinical_text"
+                    placeholder="Paste clinical note text here...
+
+Example:
+Patient: John Doe, Age: 45
+Chief Complaint: Chest pain and shortness of breath
+History of Present Illness: Patient presents with acute onset chest pain..."
+                    rows="10"
+                    class="w-full min-h-[200px] p-3 border border-border rounded-lg bg-input text-foreground placeholder-muted-foreground focus:ring-2 focus:ring-primary focus:border-transparent resize-none"
+                  ></textarea>
+                </div>
+
+                <!-- Divider -->
+                <div class="relative">
+                  <div class="absolute inset-0 flex items-center">
+                    <span class="w-full border-t border-border"></span>
+                  </div>
+                  <div class="relative flex justify-center text-xs uppercase">
+                    <span class="bg-card px-2 text-muted-foreground">Or</span>
+                  </div>
+                </div>
+
+                <!-- File Upload Section -->
+                <div class="space-y-4">
+                  <div class="space-y-2">
+                    <label for="file-upload" class="text-base font-medium text-foreground block">
+                      Upload Text File
+                    </label>
+                    <p class="text-sm text-muted-foreground">
+                      Upload a .txt file containing the clinical note
+                    </p>
+                  </div>
+                  
+                  <div class="relative">
+                    <input
+                      id="file-upload"
+                      name="clinical_file"
+                      type="file"
+                      accept=".txt"
+                      class="w-full p-3 border border-border rounded-lg bg-input text-foreground file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-gradient-medical file:text-primary-foreground hover:file:opacity-90 focus:ring-2 focus:ring-primary cursor-pointer"
+                    />
+                    <div class="absolute inset-y-0 right-3 flex items-center pointer-events-none">
+                      <i data-lucide="upload" class="h-4 w-4 text-muted-foreground"></i>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="pt-6">
+                  <button
+                    type="submit"
+                    class="w-full bg-gradient-medical hover:opacity-90 text-primary-foreground py-6 rounded-xl text-lg font-semibold shadow-medical hover:shadow-lg transition-all duration-300"
+                  >
+                    Analyze Clinical Note
+                  </button>
+                  
+                  <p class="text-xs text-muted-foreground text-center mt-3">
+                    Your clinical data is processed securely and is not stored permanently
+                  </p>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      lucide.createIcons();
+    </script>
+  </body>
+</html>

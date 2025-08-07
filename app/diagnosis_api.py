@@ -80,10 +80,10 @@ def parse_diagnosis_response(response: str) -> dict:
 
     return result
 
-# TEST SAMPLE:
-response = """**Likely Diagnosis:** Asthma exacerbation  \n**Reasoning:** The patient's symptoms of shortness of breath, wheezing, and persistent dry cough, combined with a history of asthma and seasonal allergies, suggest an asthma flare-up. The use of albuterol indicates a known respiratory condition, and allergies could be exacerbating symptoms.  \n**Urgency:** Urgent care  \n**Next Steps:** Assess peak flow and spirometry, review and adjust asthma action plan, consider adding an inhaled corticosteroid, and ensure adherence to current medications. Referral to a pulmonologist if symptoms worsen or persist."""
-parsed = parse_diagnosis_response(response)
-print(parsed["likely_diagnosis"])  
-print(parsed["reasoning"])         
-print(parsed["urgency"])           
-print(parsed["next_steps"])
+# # TEST SAMPLE:
+# response = """**Likely Diagnosis:** Asthma exacerbation  \n**Reasoning:** The patient's symptoms of shortness of breath, wheezing, and persistent dry cough, combined with a history of asthma and seasonal allergies, suggest an asthma flare-up. The use of albuterol indicates a known respiratory condition, and allergies could be exacerbating symptoms.  \n**Urgency:** Urgent care  \n**Next Steps:** Assess peak flow and spirometry, review and adjust asthma action plan, consider adding an inhaled corticosteroid, and ensure adherence to current medications. Referral to a pulmonologist if symptoms worsen or persist."""
+# parsed = parse_diagnosis_response(response)
+# print(parsed["likely_diagnosis"])  
+# print(parsed["reasoning"])         
+# print(parsed["urgency"])           
+# print(parsed["next_steps"])

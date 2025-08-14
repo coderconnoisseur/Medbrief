@@ -99,3 +99,14 @@ local.settings.json
 # Ignore test data
 test_data/
 test_data/sample_note.txt
+
+# Test files and scripts
+test_ner.py
+test_ner_enhanced.py
+
+# Deprecated/unused modules
+app/extractor.py
+
+# Any other test files
+test_*.py
+*_test.py

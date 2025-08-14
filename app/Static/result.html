@@ -97,7 +97,7 @@
                 <i data-lucide="stethoscope" class="h-6 w-6 text-primary-foreground"></i>
               </div>
               <h1 class="text-2xl font-bold text-foreground">
-                Clinical Note Smart Summarizer
+              MedBrief
               </h1>
             </div>
             <div class="flex gap-2">
@@ -140,12 +140,7 @@
                     <h3 class="text-xl font-semibold text-foreground">Original Clinical Note</h3>
                   </div>
                   <div class="bg-secondary rounded-lg p-4 text-sm text-foreground leading-relaxed max-h-64 overflow-y-auto">
-                    <p class="font-medium mb-2">Patient: John Doe, Age: 45</p>
-                    <p class="font-medium mb-2">Chief Complaint: Chest pain and shortness of breath</p>
-                    <p class="mb-2"><strong>History of Present Illness:</strong> Patient presents with acute onset chest pain that began approximately 2 hours ago. Pain is described as sharp, radiating to left arm and jaw. Associated with shortness of breath, diaphoresis, and nausea. Patient has history of hypertension and hyperlipidemia.</p>
-                    <p class="mb-2"><strong>Physical Examination:</strong> Vitals: BP 165/95, HR 102, RR 22, O2 Sat 94% on room air. Patient appears anxious and diaphoretic. Heart sounds regular with no murmurs. Lungs clear bilaterally.</p>
-                    <p class="mb-2"><strong>Assessment:</strong> Rule out acute coronary syndrome. Differential includes unstable angina, STEMI, NSTEMI.</p>
-                    <p><strong>Plan:</strong> 12-lead EKG, cardiac enzymes, chest X-ray. Start aspirin 325mg, nitroglycerin SL PRN, continuous cardiac monitoring.</p>
+                    <pre class="whitespace-pre-wrap font-sans">{{ text }}</pre>
                   </div>
                 </div>
               </div>
@@ -162,7 +157,7 @@
                     <h3 class="text-xl font-semibold text-foreground">AI-Generated Summary</h3>
                   </div>
                   <div class="bg-accent rounded-lg p-4 text-sm text-foreground leading-relaxed">
-                    <p>45-year-old male presents with acute chest pain and shortness of breath suggestive of acute coronary syndrome. Patient has cardiovascular risk factors including hypertension and hyperlipidemia. Clinical presentation warrants immediate cardiac workup and monitoring. Initial treatment with aspirin and nitroglycerin initiated pending further diagnostic evaluation.</p>
+                    <p>{{ summary }}</p>
                   </div>
                 </div>
               </div>
@@ -179,26 +174,19 @@
                     <h3 class="text-lg font-semibold text-foreground">Extracted Symptoms</h3>
                   </div>
                   <div class="space-y-2">
-                    <div class="flex items-center gap-2 p-2 bg-secondary rounded-lg">
-                      <i data-lucide="alert-circle" class="h-4 w-4 text-primary"></i>
-                      <span class="text-sm text-foreground">Acute chest pain</span>
-                    </div>
-                    <div class="flex items-center gap-2 p-2 bg-secondary rounded-lg">
-                      <i data-lucide="wind" class="h-4 w-4 text-primary"></i>
-                      <span class="text-sm text-foreground">Shortness of breath</span>
-                    </div>
-                    <div class="flex items-center gap-2 p-2 bg-secondary rounded-lg">
-                      <i data-lucide="droplets" class="h-4 w-4 text-primary"></i>
-                      <span class="text-sm text-foreground">Diaphoresis</span>
-                    </div>
-                    <div class="flex items-center gap-2 p-2 bg-secondary rounded-lg">
-                      <i data-lucide="frown" class="h-4 w-4 text-primary"></i>
-                      <span class="text-sm text-foreground">Nausea</span>
-                    </div>
-                    <div class="flex items-center gap-2 p-2 bg-secondary rounded-lg">
-                      <i data-lucide="zap" class="h-4 w-4 text-primary"></i>
-                      <span class="text-sm text-foreground">Pain radiating to left arm and jaw</span>
-                    </div>
+                    {% if structured.symptoms %}
+                      {% for symptom in structured.symptoms %}
+                        <div class="flex items-center gap-2 p-2 bg-secondary rounded-lg">
+                          <i data-lucide="alert-circle" class="h-4 w-4 text-primary"></i>
+                          <span class="text-sm text-foreground">{{ symptom }}</span>
+                        </div>
+                      {% endfor %}
+                    {% else %}
+                      <div class="flex items-center gap-2 p-2 bg-secondary rounded-lg">
+                        <i data-lucide="info" class="h-4 w-4 text-primary"></i>
+                        <span class="text-sm text-foreground">No symptoms extracted</span>
+                      </div>
+                    {% endif %}
                   </div>
                 </div>
               </div>
@@ -215,14 +203,21 @@
                     <h3 class="text-lg font-semibold text-foreground">Medications</h3>
                   </div>
                   <div class="space-y-2">
-                    <div class="flex items-center gap-2 p-2 bg-secondary rounded-lg">
-                      <i data-lucide="tablet" class="h-4 w-4 text-primary"></i>
-                      <span class="text-sm text-foreground">Aspirin 325mg</span>
-                    </div>
-                    <div class="flex items-center gap-2 p-2 bg-secondary rounded-lg">
-                      <i data-lucide="heart" class="h-4 w-4 text-primary"></i>
-                      <span class="text-sm text-foreground">Nitroglycerin SL PRN</span>
-                    </div>
+                    {% if structured.medications %}
+                      {% for medication in structured.medications %}
+                        <div class="flex items-center gap-2 p-2 bg-secondary rounded-lg">
+                          <i data-lucide="pill" class="h-4 w-4 text-primary"></i>
+                          <span class="text-sm text-foreground">
+                            <a href="https://en.wikipedia.org/wiki/{{medication}}">{{ medication }}</a>
+                          </span>
+                        </div>
+                      {% endfor %}
+                    {% else %}
+                      <div class="flex items-center gap-2 p-2 bg-secondary rounded-lg">
+                        <i data-lucide="info" class="h-4 w-4 text-primary"></i>
+                        <span class="text-sm text-foreground">No medications extracted</span>
+                      </div>
+                    {% endif %}
                   </div>
                 </div>
               </div>
@@ -239,26 +234,52 @@
                     <h3 class="text-lg font-semibold text-foreground">Diagnoses</h3>
                   </div>
                   <div class="space-y-2">
-                    <div class="flex items-center gap-2 p-2 bg-secondary rounded-lg">
-                      <i data-lucide="alert-triangle" class="h-4 w-4 text-primary"></i>
-                      <span class="text-sm text-foreground">Rule out acute coronary syndrome</span>
-                    </div>
-                    <div class="flex items-center gap-2 p-2 bg-secondary rounded-lg">
-                      <i data-lucide="heart" class="h-4 w-4 text-primary"></i>
-                      <span class="text-sm text-foreground">Unstable angina (differential)</span>
-                    </div>
-                    <div class="flex items-center gap-2 p-2 bg-secondary rounded-lg">
-                      <i data-lucide="activity" class="h-4 w-4 text-primary"></i>
-                      <span class="text-sm text-foreground">STEMI/NSTEMI (differential)</span>
-                    </div>
-                    <div class="flex items-center gap-2 p-2 bg-secondary rounded-lg">
-                      <i data-lucide="trending-up" class="h-4 w-4 text-primary"></i>
-                      <span class="text-sm text-foreground">Hypertension (history)</span>
-                    </div>
-                    <div class="flex items-center gap-2 p-2 bg-secondary rounded-lg">
-                      <i data-lucide="droplet" class="h-4 w-4 text-primary"></i>
-                      <span class="text-sm text-foreground">Hyperlipidemia (history)</span>
-                    </div>
+                    {% if diagnosis.likely_diagnosis %}
+                      <div class="flex items-center gap-2 p-2 bg-secondary rounded-lg">
+                        <i data-lucide="stethoscope" class="h-4 w-4 text-primary"></i>
+                        <span class="text-sm text-foreground font-medium">Primary: {{ diagnosis.likely_diagnosis }}</span>
+                      </div>
+                    {% endif %}
+                    
+                    {% if diagnosis.reasoning %}
+                      <div class="p-2 bg-secondary rounded-lg">
+                        <div class="flex items-start gap-2">
+                          <i data-lucide="brain" class="h-4 w-4 text-primary mt-0.5"></i>
+                          <div>
+                            <span class="text-xs text-muted-foreground font-medium">Reasoning:</span>
+                            <p class="text-sm text-foreground">{{ diagnosis.reasoning }}</p>
+                          </div>
+                        </div>
+                      </div>
+                    {% endif %}
+                    
+                    {% if diagnosis.urgency %}
+                      <div class="flex items-center gap-2 p-2 bg-secondary rounded-lg">
+                        <i data-lucide="clock" class="h-4 w-4 text-primary"></i>
+                        <span class="text-sm text-foreground">Urgency: {{ diagnosis.urgency }}</span>
+                      </div>
+                    {% endif %}
+                    
+                    {% if structured.past_medical_history %}
+                      <div class="p-2 bg-secondary rounded-lg">
+                        <div class="flex items-start gap-2">
+                          <i data-lucide="history" class="h-4 w-4 text-primary mt-0.5"></i>
+                          <div>
+                            <span class="text-xs text-muted-foreground font-medium">Medical History:</span>
+                            {% for condition in structured.past_medical_history %}
+                              <div class="text-sm text-foreground">• {{ condition }}</div>
+                            {% endfor %}
+                          </div>
+                        </div>
+                      </div>
+                    {% endif %}
+                    
+                    {% if not diagnosis.likely_diagnosis and not structured.past_medical_history %}
+                      <div class="flex items-center gap-2 p-2 bg-secondary rounded-lg">
+                        <i data-lucide="info" class="h-4 w-4 text-primary"></i>
+                        <span class="text-sm text-foreground">No diagnoses available</span>
+                      </div>
+                    {% endif %}
                   </div>
                 </div>
               </div>
@@ -275,22 +296,45 @@
                     <h3 class="text-lg font-semibold text-foreground">Treatment Plan</h3>
                   </div>
                   <div class="space-y-2">
-                    <div class="flex items-center gap-2 p-2 bg-secondary rounded-lg">
-                      <i data-lucide="activity" class="h-4 w-4 text-primary"></i>
-                      <span class="text-sm text-foreground">12-lead EKG</span>
-                    </div>
-                    <div class="flex items-center gap-2 p-2 bg-secondary rounded-lg">
-                      <i data-lucide="test-tube" class="h-4 w-4 text-primary"></i>
-                      <span class="text-sm text-foreground">Cardiac enzymes</span>
-                    </div>
-                    <div class="flex items-center gap-2 p-2 bg-secondary rounded-lg">
-                      <i data-lucide="x-ray" class="h-4 w-4 text-primary"></i>
-                      <span class="text-sm text-foreground">Chest X-ray</span>
-                    </div>
-                    <div class="flex items-center gap-2 p-2 bg-secondary rounded-lg">
-                      <i data-lucide="monitor" class="h-4 w-4 text-primary"></i>
-                      <span class="text-sm text-foreground">Continuous cardiac monitoring</span>
-                    </div>
+                    {% if diagnosis.next_steps %}
+                      <div class="p-2 bg-secondary rounded-lg">
+                        <div class="flex items-start gap-2">
+                          <i data-lucide="clipboard-check" class="h-4 w-4 text-primary mt-0.5"></i>
+                          <div>
+                            <span class="text-xs text-muted-foreground font-medium">AI-Recommended Next Steps:</span>
+                            <p class="text-sm text-foreground">{{ diagnosis.next_steps }}</p>
+                          </div>
+                        </div>
+                      </div>
+                    {% endif %}
+                    
+                    {% if structured.plan %}
+                      {% for plan_item in structured.plan %}
+                        <div class="flex items-center gap-2 p-2 bg-secondary rounded-lg">
+                          <i data-lucide="check-circle" class="h-4 w-4 text-primary"></i>
+                          <span class="text-sm text-foreground">{{ plan_item }}</span>
+                        </div>
+                      {% endfor %}
+                    {% endif %}
+                    
+                    {% if vitals %}
+                      <div class="p-2 bg-secondary rounded-lg">
+                        <div class="flex items-start gap-2">
+                          <i data-lucide="activity" class="h-4 w-4 text-primary mt-0.5"></i>
+                          <div>
+                            <span class="text-xs text-muted-foreground font-medium">Current Vitals:</span>
+                            <p class="text-sm text-foreground">{{ vitals }}</p>
+                          </div>
+                        </div>
+                      </div>
+                    {% endif %}
+                    
+                    {% if not diagnosis.next_steps and not structured.plan and not vitals %}
+                      <div class="flex items-center gap-2 p-2 bg-secondary rounded-lg">
+                        <i data-lucide="info" class="h-4 w-4 text-primary"></i>
+                        <span class="text-sm text-foreground">No treatment plan available</span>
+                      </div>
+                    {% endif %}
                   </div>
                 </div>
               </div>

@@ -179,6 +179,9 @@ History of Present Illness: Patient presents with acute onset chest pain..."
                     </label>
                     <p class="text-sm text-muted-foreground">
                       Upload a .txt file containing the clinical note
+                      {% if error %}
+  <div class="text-red-600 font-semibold mb-4">{{ error }}</div>
+{% endif %}
                     </p>
                   </div>
                   

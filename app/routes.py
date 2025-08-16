@@ -3,7 +3,6 @@ from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
 from fastapi import Request
 from fastapi import APIRouter, UploadFile, File, Body
-from httpcore import request
 from app.nlp.summarizer import summarize_note
 from app.nlp.ner import extract_entities  
 from app.diagnosis_api import suggest_diagnosis

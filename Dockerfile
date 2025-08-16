@@ -1,5 +1,5 @@
-## Use mambaforge base image for conda-managed binary packages
-FROM mambaorg/mambaforge:1.4.0
+## Use micromamba base image for conda-managed binary packages
+FROM mambaorg/micromamba:1.4.0
 
 # Set working dir
 WORKDIR /app

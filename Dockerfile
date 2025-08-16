@@ -1,27 +1,30 @@
-# Use an official Python base with system libs
-FROM python:3.11-slim
-
-# Install system build tools needed for C extensions
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential gcc g++ git curl libffi-dev libssl-dev pkg-config \
-    && rm -rf /var/lib/apt/lists/*
+## Use mambaforge base image for conda-managed binary packages
+FROM mambaorg/mambaforge:1.4.0
 
 # Set working dir
 WORKDIR /app
 
-# Copy only requirements first for caching
-COPY requirements.txt .
+# Copy environment file and requirements
+COPY requirements.txt ./
+COPY entrypoint.sh ./
 
-# Upgrade pip and install wheel first so binary wheels are preferred
+# Install spaCy and scispaCy from conda-forge (binary wheels) to avoid building C extensions
+RUN mamba install -y -n base -c conda-forge \
+    python=3.11 \
+    spacy=3.7.* \
+    scispacy=0.5.* \
+    -c conda-forge && mamba clean -afy
+
+# Upgrade pip and install remaining pip packages without deps (conda provided many dependencies)
 RUN python -m pip install --upgrade pip setuptools wheel && \
-    pip install -r requirements.txt
+    pip install --no-deps -r requirements.txt
 
-# Copy app code
+# Copy app sources
 COPY . .
 
-# Expose port (Render provides PORT env var)
-ENV PORT 8000
-
-# Ensure entrypoint is executable and use it so $PORT is read at runtime
+# Ensure entrypoint is executable
 RUN chmod +x /app/entrypoint.sh
+
+# Default PORT env
+ENV PORT=8000
 ENTRYPOINT ["/app/entrypoint.sh"]

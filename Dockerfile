@@ -21,4 +21,7 @@ COPY . .
 
 # Expose port (Render provides PORT env var)
 ENV PORT 8000
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+
+# Ensure entrypoint is executable and use it so $PORT is read at runtime
+RUN chmod +x /app/entrypoint.sh
+ENTRYPOINT ["/app/entrypoint.sh"]
